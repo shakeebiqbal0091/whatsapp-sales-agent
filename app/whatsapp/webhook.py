@@ -15,7 +15,8 @@ from app.agents.sales_agent import FALLBACK_REPLY
 from app.config import Settings, get_settings
 from app.database.connection import get_session_factory
 from app.database.repositories.event_repository import EventRepository
-from app.main import get_llm
+# from app.main import get_llm
+from app.dependencies import get_llm
 from app.services.chat_service import ChatService
 from app.whatsapp.client import WhatsAppClient
 from app.whatsapp.parser import IncomingMessage, parse_incoming
@@ -33,7 +34,11 @@ def get_whatsapp_client() -> WhatsAppClient:
 def _valid_signature(wa: WhatsAppSettings, body: bytes, header: str | None) -> bool:
     secret = wa.whatsapp_app_secret
     if secret is None:
-        return True  # not configured: acceptable for local dev only (see docs/PHASE_9_WHATSAPP.md)
+        logger.warning(
+            "WHATSAPP_APP_SECRET is not configured; "
+            "signature validation is disabled for this request"
+        )
+        return True
     if not header or not header.startswith("sha256="):
         return False
     expected = hmac.new(secret.get_secret_value().encode(), body, hashlib.sha256).hexdigest()

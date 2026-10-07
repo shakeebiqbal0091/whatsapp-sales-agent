@@ -8,7 +8,9 @@ from app.whatsapp.settings import WhatsAppSettings
 
 logger = logging.getLogger(__name__)
 
-MAX_BODY_CHARS = 4096  # WhatsApp text limit
+# MAX_BODY_CHARS = 4096  # WhatsApp text limit
+MAX_BODY_CHARS = 4096
+MAX_ERROR_MESSAGE_CHARS = 200
 RETRY_STATUSES = {429, 500, 502, 503, 504}
 
 
@@ -75,7 +77,8 @@ class WhatsAppClient:
         except (ValueError, KeyError, IndexError, TypeError):
             logger.error("whatsapp send: 2xx response without a message id")
             return False
-        logger.info("whatsapp message sent wamid=%s", message_id)
+        # logger.info("whatsapp message sent wamid=%s", message_id)
+        logger.info("whatsapp message accepted wamid=%s", message_id)
         return True
 
     @staticmethod
