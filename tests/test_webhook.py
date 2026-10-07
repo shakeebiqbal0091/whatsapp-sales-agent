@@ -247,3 +247,110 @@ def test_webhook_empty_message_payload_is_acknowledged():
         assert response.json() == {"status": "ok"}
     finally:
         clear_overrides()
+
+
+
+import pytest
+
+from app.agents.sales_agent import FALLBACK_REPLY
+from app.whatsapp.parser import IncomingMessage
+from app.whatsapp import webhook
+
+
+def test_duplicate_event_is_processed_only_once(
+    session_factory,
+    settings,
+    monkeypatch,
+):
+    """The same WhatsApp event must only be processed once."""
+
+    message = IncomingMessage(
+        message_id="wamid.DUPLICATE_TEST",
+        phone="923001234567",
+        text="Do you have laptops?",
+    )
+
+    calls = []
+
+    class FakeChatService:
+        def __init__(self, session, llm, settings):
+            pass
+
+        def handle_message(self, phone, text):
+            calls.append((phone, text))
+            return "Yes, we have laptops."
+
+    monkeypatch.setattr(
+        webhook,
+        "ChatService",
+        FakeChatService,
+    )
+
+    fake_llm = object()
+
+    first_result = webhook._handle_sync(
+        message,
+        session_factory,
+        fake_llm,
+        settings,
+    )
+
+    second_result = webhook._handle_sync(
+        message,
+        session_factory,
+        fake_llm,
+        settings,
+    )
+
+    assert first_result == "Yes, we have laptops."
+    assert second_result is None
+
+    # ChatService must only run once.
+    assert len(calls) == 1
+
+    assert calls[0] == (
+        "923001234567",
+        "Do you have laptops?",
+    )
+
+
+@pytest.mark.anyio
+async def test_process_message_sends_fallback_on_failure(monkeypatch):
+    """Processing failure should send the fallback reply."""
+
+    message = IncomingMessage(
+        message_id="wamid.BACKGROUND_FAILURE_TEST",
+        phone="923001234567",
+        text="Hello",
+    )
+
+    async def fake_run_in_threadpool(func, *args, **kwargs):
+        raise RuntimeError("Simulated processing failure")
+
+    monkeypatch.setattr(
+        webhook,
+        "run_in_threadpool",
+        fake_run_in_threadpool,
+    )
+
+    sent_messages = []
+
+    class FakeWhatsAppClient:
+        async def send_text(self, phone, text):
+            sent_messages.append((phone, text))
+            return True
+
+    await webhook.process_message(
+        message=message,
+        session_factory=None,
+        llm=None,
+        settings=None,
+        client=FakeWhatsAppClient(),
+    )
+
+    assert sent_messages == [
+        (
+            "923001234567",
+            FALLBACK_REPLY,
+        )
+    ]
