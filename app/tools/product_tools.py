@@ -29,7 +29,13 @@ def build_product_tools(session: Session, currency: str) -> list[BaseTool]:
 
     @tool("search_products", args_schema=SearchProductsArgs)
     def search_products(query: str, category: str | None = None) -> dict:
-        """Search the product catalogue by name, keywords or category. Returns up to 5 real products with price and stock. Also use it to list what is sold."""
+        """Search the product catalogue by name, keywords or category.
+        Returns up to 5 real active products with price and stock.
+        For broad catalogue requests such as "What products do you have?",
+        "What do you sell?", or "Show me your products", call this tool and
+        present multiple products from the returned results when available.
+        Never invent products or product details.
+        """
         products = service.search_products(query, category)
         logger.info("tool search_products results=%d", len(products))
         result: dict = {"count": len(products), "products": [p.model_dump(mode="json") for p in products]}
