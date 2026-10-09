@@ -24,7 +24,7 @@ def webhook_settings():
         whatsapp_app_secret=SecretStr(APP_SECRET),
         whatsapp_access_token=SecretStr("test-access-token"),
         whatsapp_phone_number_id="123456789",
-        whatsapp_api_version="v21.0",
+        whatsapp_api_version="v26.0",
     )
 
 

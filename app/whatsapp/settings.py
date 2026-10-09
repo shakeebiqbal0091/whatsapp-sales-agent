@@ -48,7 +48,7 @@ class WhatsAppSettings(BaseSettings):
     whatsapp_app_secret: SecretStr | None = None
 
     # Keep this configurable because Meta API versions change.
-    whatsapp_api_version: str = "v21.0"
+    whatsapp_api_version: str = "v26.0"
 
     # HTTP timeout for outbound Meta API calls.
     whatsapp_timeout_seconds: float = 10.0

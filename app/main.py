@@ -59,7 +59,7 @@ import logging
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Request
 from sqlalchemy.orm import Session
 
 from app.config import Settings, get_settings
@@ -97,6 +97,18 @@ app = FastAPI(
 
 # WhatsApp Cloud API webhook.
 app.include_router(whatsapp_router)
+
+
+@app.get("/")
+def root(request: Request) -> dict[str, str]:
+    """Public landing so the ngrok URL is not a 404 after the browser warning."""
+    base = str(request.base_url).rstrip("/")
+    return {
+        "status": "ok",
+        "health": f"{base}/health",
+        "webhook": f"{base}/webhook",
+        "chat": f"{base}/chat",
+    }
 
 
 @app.get("/health")

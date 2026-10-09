@@ -77,6 +77,7 @@ async def receive_webhook(
     client: WhatsAppClient = Depends(get_whatsapp_client),
 ) -> dict[str, str]:
     body = await request.body()
+    print(body)
     if not _valid_signature(wa, body, request.headers.get("X-Hub-Signature-256")):
         logger.warning("webhook rejected: bad signature")
         raise HTTPException(status_code=403, detail="Invalid signature")

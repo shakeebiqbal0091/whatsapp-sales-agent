@@ -71,6 +71,7 @@ Message the business number from a DIFFERENT WhatsApp account (a number cannot m
 | Every customer gets the generic "trouble processing" reply | `processed_events` table missing -> `python -m scripts.create_tables` |
 | `ModuleNotFoundError: psycopg` | URL must be `postgresql+psycopg2://...` |
 | Meta "callback URL or verify token couldn't be validated" | uvicorn/ngrok down, token mismatch, or .env edited without restarting uvicorn |
+| Browser shows ngrok "Visit Site" and inspector has no requests | Free ngrok interstitial (not an app failure). Click **Visit Site** once, or send header `ngrok-skip-browser-warning: 1`. Meta webhook clients skip this. Callback URL must be `https://<ngrok-domain>/webhook`. |
 | Simulator works, real messages never arrive | not subscribed to `messages`, app not subscribed to the WABA, or app still in Development mode |
 | Logs: `whatsapp send rejected status=401` | token expired/invalid (code 190) |
 | Logs: `status=400` on send | wrong phone number id, or recipient outside the 24 h window (free-form replies only work within 24 h of the customer's last message) |

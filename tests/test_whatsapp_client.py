@@ -26,7 +26,7 @@ def make_settings() -> WhatsAppSettings:
         _env_file=None,
         whatsapp_access_token=SecretStr("test-token"),
         whatsapp_phone_number_id="123456789",
-        whatsapp_api_version="v21.0",
+        whatsapp_api_version="v26.0",
         whatsapp_timeout_seconds=5,
     )
 
