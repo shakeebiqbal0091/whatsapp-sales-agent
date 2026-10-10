@@ -15,11 +15,11 @@ from app.agents.sales_agent import FALLBACK_REPLY
 from app.config import Settings, get_settings
 from app.database.connection import get_session_factory
 from app.database.repositories.event_repository import EventRepository
-# from app.main import get_llm
 from app.dependencies import get_llm
 from app.services.chat_service import ChatService
 from app.whatsapp.client import WhatsAppClient
 from app.whatsapp.parser import IncomingMessage, parse_incoming
+from app.whatsapp.rate_limit import RATE_LIMIT_REPLY, Decision, get_rate_limiter
 from app.whatsapp.settings import WhatsAppSettings, get_whatsapp_settings
 
 logger = logging.getLogger(__name__)
@@ -77,7 +77,6 @@ async def receive_webhook(
     client: WhatsAppClient = Depends(get_whatsapp_client),
 ) -> dict[str, str]:
     body = await request.body()
-    print(body)
     if not _valid_signature(wa, body, request.headers.get("X-Hub-Signature-256")):
         logger.warning("webhook rejected: bad signature")
         raise HTTPException(status_code=403, detail="Invalid signature")
@@ -111,6 +110,12 @@ async def process_message(
     settings: Settings,
     client: WhatsAppClient,
 ) -> None:
+    decision = get_rate_limiter().check(message.phone)  # event-loop thread: no locking needed
+    if decision is not Decision.ALLOW:
+        logger.warning("rate limited decision=%s", decision.value)
+        if decision is Decision.NOTIFY:
+            await client.send_text(message.phone, RATE_LIMIT_REPLY)
+        return
     try:
         reply = await run_in_threadpool(_handle_sync, message, session_factory, llm, settings)
     except Exception:
