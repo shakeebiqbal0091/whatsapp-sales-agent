@@ -50,6 +50,13 @@ class SalesService:
 
         A query made only of stopwords ("what products do you have?") lists the catalogue.
         """
+        # Reject obvious SQL-injection-style input.
+        if re.search(
+            r"(--|;|/\*|\*/|\b(drop|alter|truncate|insert|delete|update|union|exec)\b)",
+            query,
+            flags=re.IGNORECASE,
+        ):
+            return []
         terms = _tokenize(query)
         candidates = self.repo.search(terms, category)
 

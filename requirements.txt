@@ -7,5 +7,6 @@ pydantic-settings>=2.3
 langgraph>=1.0
 langchain-core>=1.0
 langchain-groq>=1.0
-httpx>=0.27                 # FastAPI TestClient now; WhatsApp client in Phase 9
+httpx>=0.27
+edge-tts>=7.0
 pytest>=8.0

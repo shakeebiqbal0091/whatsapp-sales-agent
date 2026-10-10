@@ -12,6 +12,16 @@ class Settings(BaseSettings):
     app_env: str = "development"
     log_level: str = "INFO"
 
+    # Voice-note processing
+	
+    speech_to_text_model: str = "whisper-large-v3-turbo"
+    speech_timeout_seconds: float = 30.0
+    max_audio_bytes: int = 16777216
+
+    # Text-to-speech
+    tts_voice: str = "en-US-AriaNeural"
+    tts_rate: str = "+0%"
+
     groq_api_key: SecretStr | None = None
     groq_model: str = "openai/gpt-oss-120b"
     llm_timeout_seconds: float = 30.0
@@ -30,3 +40,4 @@ class Settings(BaseSettings):
 @lru_cache
 def get_settings() -> Settings:
     return Settings()
+

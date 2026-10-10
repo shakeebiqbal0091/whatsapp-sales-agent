@@ -1,4 +1,4 @@
-"""GET/POST /webhook. Verify, validate, ack fast; process in a background task."""
+"""GET/POST /webhook. Verify, validate, acknowledge quickly, then process messages."""
 import hashlib
 import hmac
 import json
@@ -21,9 +21,11 @@ from app.whatsapp.client import WhatsAppClient
 from app.whatsapp.parser import IncomingMessage, parse_incoming
 from app.whatsapp.rate_limit import RATE_LIMIT_REPLY, Decision, get_rate_limiter
 from app.whatsapp.settings import WhatsAppSettings, get_whatsapp_settings
+from app.whatsapp.speech import SpeechError, synthesize_speech, transcribe_audio
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+AUDIO_FAILURE_REPLY = "Sorry, I couldn't understand that voice note. Please try again or send a text message."
 
 
 @lru_cache
@@ -34,10 +36,7 @@ def get_whatsapp_client() -> WhatsAppClient:
 def _valid_signature(wa: WhatsAppSettings, body: bytes, header: str | None) -> bool:
     secret = wa.whatsapp_app_secret
     if secret is None:
-        logger.warning(
-            "WHATSAPP_APP_SECRET is not configured; "
-            "signature validation is disabled for this request"
-        )
+        logger.warning("WHATSAPP_APP_SECRET is not configured; signature validation is disabled for this request")
         return True
     if not header or not header.startswith("sha256="):
         return False
@@ -54,10 +53,7 @@ def verify_webhook(
 ) -> PlainTextResponse:
     expected = wa.whatsapp_verify_token
     if (
-        mode == "subscribe"
-        and challenge is not None
-        and token is not None
-        and expected is not None
+        mode == "subscribe" and challenge is not None and token is not None and expected is not None
         and hmac.compare_digest(token.encode(), expected.get_secret_value().encode())
     ):
         logger.info("webhook verified")
@@ -89,18 +85,37 @@ async def receive_webhook(
     logger.info("webhook received messages=%d", len(messages))
     for message in messages:
         background.add_task(process_message, message, session_factory, llm, settings, client)
-    return {"status": "ok"}  # always 200 quickly so Meta does not retry
+    return {"status": "ok"}
 
 
 def _handle_sync(
-    message: IncomingMessage, session_factory: sessionmaker[Session], llm: BaseChatModel, settings: Settings
+    message: IncomingMessage,
+    session_factory: sessionmaker[Session],
+    llm: BaseChatModel,
+    settings: Settings,
+    *,
+    already_claimed: bool = False,
 ) -> str | None:
-    """Blocking part: dedupe + agent turn. Returns the reply, or None if this is a duplicate."""
+    """Blocking part: dedupe + agent turn."""
+    if not message.text:
+        return None
+
     with session_factory() as session:
-        if not EventRepository(session).claim(message.message_id):
+        if not already_claimed and not EventRepository(session).claim(message.message_id):
             logger.info("duplicate webhook event ignored id=%s", message.message_id)
             return None
-        return ChatService(session, llm, settings).handle_message(message.phone, message.text)
+
+        return ChatService(session, llm, settings).handle_message(
+            message.phone, message.text
+        )
+
+def _claim_event(
+    message_id: str,
+    session_factory: sessionmaker[Session],
+) -> bool:
+    """Claim a message ID before expensive audio processing."""
+    with session_factory() as session:
+        return EventRepository(session).claim(message_id)
 
 
 async def process_message(
@@ -110,16 +125,73 @@ async def process_message(
     settings: Settings,
     client: WhatsAppClient,
 ) -> None:
-    decision = get_rate_limiter().check(message.phone)  # event-loop thread: no locking needed
+    decision = get_rate_limiter().check(message.phone)
     if decision is not Decision.ALLOW:
         logger.warning("rate limited decision=%s", decision.value)
         if decision is Decision.NOTIFY:
             await client.send_text(message.phone, RATE_LIMIT_REPLY)
         return
+
+    is_audio = message.message_type == "audio"
+    if is_audio:
+        claimed = await run_in_threadpool(
+            _claim_event,
+            message.message_id,
+            session_factory,
+        )
+        if not claimed:
+            logger.info(
+                "duplicate audio webhook event ignored id=%s",
+                message.message_id,
+            )
+            return
+            
+    effective_message = message
+    if is_audio:
+        if not message.media_id:
+            await client.send_text(message.phone, AUDIO_FAILURE_REPLY)
+            return
+        downloaded = await client.download_media(message.media_id)
+        if downloaded is None:
+            await client.send_text(message.phone, AUDIO_FAILURE_REPLY)
+            return
+        audio_bytes, mime_type = downloaded
+        suffix = ".ogg" if "ogg" in mime_type.lower() else ".audio"
+        try:
+            transcript = await transcribe_audio(audio_bytes, f"voice-note{suffix}", mime_type, settings)
+        except SpeechError:
+            logger.warning("voice-note transcription unavailable id=%s", message.message_id)
+            await client.send_text(message.phone, AUDIO_FAILURE_REPLY)
+            return
+        except Exception:
+            logger.exception("unexpected voice-note transcription error id=%s", message.message_id)
+            await client.send_text(message.phone, AUDIO_FAILURE_REPLY)
+            return
+        effective_message = message.model_copy(update={"text": transcript})
+
     try:
-        reply = await run_in_threadpool(_handle_sync, message, session_factory, llm, settings)
+        reply = await run_in_threadpool(
+    _handle_sync,
+    effective_message,
+    session_factory,
+    llm,
+    settings,
+    already_claimed=is_audio,
+)
     except Exception:
         logger.exception("webhook processing failure id=%s", message.message_id)
         reply = FALLBACK_REPLY
-    if reply is not None:
-        await client.send_text(message.phone, reply)
+
+    if reply is None:
+        return
+
+    if is_audio:
+        try:
+            reply_audio = await synthesize_speech(reply, settings)
+            if await client.send_audio(message.phone, reply_audio):
+                return
+            logger.warning("voice reply delivery failed; falling back to text id=%s", message.message_id)
+        except Exception:
+            logger.exception("voice reply generation failed; falling back to text id=%s", message.message_id)
+
+    await client.send_text(message.phone, reply)

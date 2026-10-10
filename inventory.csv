@@ -1,5 +1,501 @@
 name,description,price,stock_quantity,category,active
-Logitech K380 Wireless Keyboard,Compact Bluetooth keyboard,35.00,12,Keyboards,true
-Dell KB216 Wired Keyboard,Full-size wired USB keyboard,15.00,40,Keyboards,true
-Logitech MX Keys Wireless Keyboard,Backlit productivity keyboard,109.00,0,Keyboards,true
-Anker 65W USB-C Charger,Fast USB-C wall charger,29.00,25,Accessories,true
+Anker 65W USB-C Charger,Fast USB-C wall charger,55.10,174,Accessories,true
+USB-C to USB-C Cable 2m,Durable braided charging cable,110.57,70,Accessories,true
+Wireless Charging Pad,Qi-compatible wireless charging pad,51.75,69,Accessories,true
+Laptop Sleeve 15-inch,Padded protective laptop sleeve,29.59,105,Accessories,true
+USB-C Hub 7-in-1,Multiport adapter with HDMI and USB ports,4.87,149,Accessories,true
+Bluetooth Tracker Tag,Compact item finder with replaceable battery,51.84,159,Accessories,true
+Portable Power Bank 20000mAh,High-capacity portable battery pack,32.27,79,Accessories,true
+Phone Tripod Stand,Adjustable tabletop phone tripod,113.97,178,Accessories,true
+Tempered Glass Screen Protector,Scratch-resistant screen protector,42.98,105,Accessories,true
+Universal Travel Adapter,Compact international plug adapter,12.86,103,Accessories,true
+HDMI Cable 2m,High-speed HDMI cable for displays,111.13,148,Accessories,true
+Ethernet Cable 5m,Cat6 network cable for wired connections,10.15,112,Accessories,true
+Wireless Mouse,Ergonomic wireless optical mouse,91.51,22,Accessories,true
+Mechanical Keyboard,Compact mechanical keyboard with tactile switches,52.99,83,Accessories,true
+Webcam 1080p,Full HD webcam for calls and streaming,130.71,178,Accessories,true
+Noise-Isolating Earbuds,Wired in-ear earbuds with microphone,79.68,177,Accessories,true
+Bluetooth Headphones,Over-ear wireless headphones,62.66,30,Accessories,true
+USB Flash Drive 128GB,Portable USB storage drive,75.01,143,Accessories,true
+External SSD 1TB,Portable solid-state storage drive,44.94,11,Accessories,true
+Laptop Cooling Pad,USB-powered laptop cooling stand,81.05,110,Accessories,true
+Classic Cotton T-Shirt,Everyday cotton crew-neck T-shirt,67.26,130,Clothing,true
+Men's Oxford Shirt,Button-down cotton-blend Oxford shirt,68.28,155,Clothing,true
+Women's Linen Blouse,Lightweight linen-blend casual blouse,79.18,93,Clothing,true
+Unisex Zip Hoodie,Soft fleece zip-up hoodie,99.12,73,Clothing,true
+Slim-Fit Jeans,Stretch denim jeans with slim fit,10.96,12,Clothing,true
+Chino Trousers,Smart-casual cotton-blend trousers,22.42,167,Clothing,true
+Running Shorts,Lightweight moisture-wicking sports shorts,82.86,5,Clothing,true
+Puffer Jacket,Insulated jacket for cold weather,103.63,151,Clothing,true
+Rain Jacket,Water-resistant hooded rain jacket,65.52,33,Clothing,true
+Wool Blend Scarf,Soft warm scarf for winter,65.91,137,Clothing,true
+Knit Beanie,Ribbed knit beanie hat,30.64,106,Clothing,true
+Leather Belt,Classic adjustable everyday belt,68.06,41,Clothing,true
+Canvas Sneakers,Low-top casual canvas sneakers,33.61,14,Clothing,false
+Running Shoes,Cushioned athletic running shoes,7.07,125,Clothing,true
+Crew Socks 5-Pack,Comfortable cotton-blend crew socks,117.80,107,Clothing,true
+Cotton Pajama Set,Breathable two-piece sleepwear set,6.15,41,Clothing,true
+Sports Leggings,Stretch leggings for training and yoga,5.36,151,Clothing,true
+Baseball Cap,Adjustable cotton baseball cap,87.75,110,Clothing,true
+Leather Wallet,Slim wallet with multiple card slots,9.43,159,Clothing,true
+Reusable Tote Bag,Foldable shopping tote made from sturdy fabric,59.93,155,Clothing,true
+Ceramic Dinner Plate Set,Set of four glazed ceramic dinner plates,70.23,134,Home,true
+Stainless Steel Water Bottle,"Insulated reusable bottle, 750 ml",173.54,41,Home,true
+Glass Food Storage Set,Set of three lidded food storage containers,37.75,129,Home,true
+Nonstick Frying Pan 28cm,Nonstick skillet for everyday cooking,131.78,108,Home,true
+Stainless Steel Saucepan,Medium saucepan with tempered glass lid,176.45,152,Home,true
+Bamboo Cutting Board,Durable bamboo board for food preparation,174.69,107,Home,false
+Chef Knife 20cm,Stainless steel kitchen chef knife,24.50,63,Home,true
+Electric Kettle 1.7L,Fast-boil kettle with automatic shutoff,45.06,175,Home,true
+French Press Coffee Maker,Glass coffee press for brewed coffee,101.93,139,Home,true
+Digital Kitchen Scale,Compact scale with gram and ounce readings,69.62,7,Home,true
+Cotton Bath Towel,Absorbent full-size cotton bath towel,67.63,66,Home,true
+Microfiber Cleaning Cloths 6-Pack,Reusable cloths for household cleaning,80.79,16,Home,true
+LED Desk Lamp,Adjustable desk lamp with dimmable LED,58.69,157,Home,true
+Queen Fitted Sheet,Soft fitted sheet for a queen mattress,62.99,126,Home,true
+Memory Foam Pillow,Supportive pillow with removable cover,176.37,68,Home,true
+Laundry Basket,Ventilated hamper with carry handles,111.51,110,Home,true
+Vacuum Storage Bags 5-Pack,Space-saving bags for seasonal clothing,51.20,43,Home,true
+Wall Clock 30cm,Quiet quartz wall clock for home or office,68.89,122,Home,true
+Scented Candle,Jar candle with a warm vanilla fragrance,36.80,5,Home,true
+Indoor Plant Pot 20cm,Minimal ceramic planter with drainage hole,110.18,145,Home,true
+A4 Copy Paper 500 Sheets,Standard white paper for printing and copying,160.14,176,Office,true
+Ballpoint Pens 10-Pack,Smooth-writing blue ink ballpoint pens,202.59,120,Office,true
+Hardcover Notebook A5,Ruled notebook with durable hardcover,26.54,15,Office,true
+Sticky Notes 12-Pack,Assorted-color adhesive memo notes,21.33,159,Office,true
+Permanent Markers 4-Pack,Water-resistant black permanent markers,3.78,130,Office,true
+Highlighter Set 6-Pack,Bright chisel-tip highlighters in assorted colors,147.14,93,Office,true
+Desktop File Organizer,Multi-compartment organizer for documents,21.03,117,Office,true
+Lever Arch File,Durable file folder for A4 documents,35.20,118,Office,true
+Stapler with Staples,Desktop stapler supplied with staples,60.49,61,Office,true
+Scissors 8-inch,General-purpose stainless steel scissors,162.58,151,Office,true
+Packing Tape 6-Pack,Clear adhesive tape rolls for packing,76.94,142,Office,false
+Desk Mat,Protective desk mat with smooth work surface,25.39,65,Office,true
+Whiteboard 60x90cm,Wall-mounted dry-erase board,116.97,80,Office,true
+Whiteboard Marker Set,Low-odor dry-erase markers in four colors,44.41,49,Office,true
+Scientific Calculator,Multi-function calculator for study and work,180.44,167,Office,true
+Ergonomic Office Chair,Adjustable office chair with lumbar support,47.02,148,Office,true
+Monitor Stand,Raised monitor platform with storage space,74.03,58,Office,true
+Weekly Planner,Undated weekly planner for task organization,60.40,143,Office,true
+Document Wallet,Expandable wallet for loose papers,193.88,98,Office,true
+Printer Ink Cartridge,Replacement ink cartridge for compatible printers,189.80,9,Office,true
+Yoga Mat 6mm,Non-slip exercise mat for yoga and stretching,8.52,140,Sports,false
+Resistance Bands Set,Set of five resistance bands for workouts,152.33,133,Sports,true
+Adjustable Dumbbell 10kg,Single adjustable dumbbell for strength training,90.12,73,Sports,true
+Stainless Steel Shaker Bottle,Leak-resistant shaker for protein drinks,5.33,57,Sports,true
+Jump Rope,Adjustable skipping rope with comfortable handles,80.55,126,Sports,true
+Foam Roller,Textured roller for post-workout muscle massage,30.73,120,Sports,true
+Basketball Size 7,Durable indoor and outdoor basketball,126.90,105,Sports,true
+Football Size 5,Training football with durable outer surface,98.69,117,Sports,true
+Badminton Racket,Lightweight racket for recreational badminton,66.03,123,Sports,true
+Tennis Balls 3-Pack,Pressurized tennis balls for practice and play,129.96,86,Sports,true
+Swimming Goggles,Adjustable anti-fog goggles for swimming,40.95,131,Sports,true
+Cycling Water Bottle,Squeeze bottle designed for bicycle cages,128.64,180,Sports,true
+Bike Repair Kit,Compact tire patch and repair tool kit,79.78,80,Sports,true
+Camping Headlamp,LED headlamp with adjustable brightness,4.24,38,Sports,true
+Insulated Camping Mug,Double-wall mug for outdoor drinks,136.49,124,Sports,true
+Hiking Daypack 20L,Lightweight backpack for day hikes,51.01,119,Sports,true
+Sleeping Bag,Three-season sleeping bag for camping,110.57,69,Sports,true
+Portable Camping Lantern,Rechargeable lantern for campsite lighting,150.72,151,Sports,true
+Knee Support Sleeve,Stretch support sleeve for sports activities,62.98,50,Sports,true
+Sports Duffel Bag,Roomy gym bag with separate shoe compartment,44.37,10,Sports,false
+Gentle Facial Cleanser,Daily face cleanser for removing dirt and oil,53.91,98,Beauty,true
+Moisturizing Face Cream,Lightweight daily facial moisturizer,54.65,46,Beauty,true
+SPF 50 Sunscreen,Broad-spectrum sunscreen for everyday use,17.96,17,Beauty,true
+Lip Balm 3-Pack,Moisturizing lip balm in assorted flavors,63.46,119,Beauty,true
+Shampoo 400ml,Daily cleansing shampoo for hair,69.76,139,Beauty,true
+Conditioner 400ml,Hair conditioner for softness and manageability,81.48,63,Beauty,true
+Body Lotion 250ml,Hydrating lotion for everyday body care,13.39,87,Beauty,true
+Hand Cream,Travel-size cream for dry hands,41.11,8,Beauty,true
+Facial Sheet Masks 5-Pack,Disposable hydrating sheet masks,84.91,5,Beauty,true
+Makeup Brush Set,Set of cosmetic brushes for face and eyes,24.13,38,Beauty,true
+Nail Clipper Set,Stainless steel grooming tools for nails,77.38,166,Beauty,true
+Hair Dryer 1800W,Hair dryer with two heat settings,15.36,28,Beauty,true
+Ceramic Hair Straightener,Heated styling tool with ceramic plates,27.93,150,Beauty,true
+Electric Toothbrush,Rechargeable toothbrush with replacement head,5.19,105,Beauty,true
+Floss Picks 50-Pack,Disposable dental floss picks,58.20,123,Beauty,true
+Cotton Makeup Pads 100-Pack,Soft cotton pads for cosmetic use,36.83,69,Beauty,true
+Perfume Atomizer 10ml,Refillable travel spray bottle,83.87,40,Beauty,true
+Cosmetic Organizer,Compartment organizer for beauty products,47.49,131,Beauty,true
+Bath Bomb Gift Set,Set of scented bath fizzers,73.59,157,Beauty,true
+Wide-Tooth Comb,Gentle comb for detangling wet or dry hair,14.25,34,Beauty,true
+Wooden Building Blocks,Colorful wooden blocks for creative play,82.17,150,Toys,true
+Jigsaw Puzzle 1000 Pieces,Illustrated puzzle for adults and older children,103.80,60,Toys,true
+Remote Control Car,Rechargeable toy car with handheld controller,58.99,103,Toys,true
+Plush Teddy Bear,Soft stuffed teddy bear for gifting,64.36,77,Toys,true
+Watercolor Paint Set,Washable watercolor paints with brush,102.91,54,Toys,true
+Kids Drawing Pad,Blank drawing pad for art activities,34.80,8,Toys,false
+Magnetic Building Tiles,Colorful magnetic construction tiles,16.43,65,Toys,true
+Board Game Classic Edition,Family strategy board game,101.55,79,Toys,true
+Foam Dart Blaster,Toy blaster with soft foam darts,54.97,96,Toys,true
+Kids Science Experiment Kit,Beginner-friendly hands-on science kit,81.51,47,Toys,true
+Dinosaur Figure Set,Set of assorted realistic dinosaur figures,50.18,156,Toys,true
+Toy Train Set,Battery-powered train with track pieces,62.54,179,Toys,true
+Play Dough 12-Pack,Modeling dough in assorted colors,81.54,36,Toys,true
+Kids Gardening Set,Small gardening tools for young learners,109.72,117,Toys,true
+Card Game Travel Edition,Compact card game for family trips,15.11,90,Toys,true
+Stuffed Rabbit Plush,Soft rabbit plush toy with embroidered details,71.48,12,Toys,true
+Kids Scooter Helmet,Adjustable protective helmet for cycling and scooting,99.69,79,Toys,false
+Bubble Machine,Battery-operated bubble maker for outdoor play,72.16,9,Toys,true
+Wooden Shape Sorter,Early-learning toy for matching shapes,6.06,94,Toys,true
+Mini Table Tennis Set,Compact paddle and ball set for casual play,12.98,72,Toys,true
+Basmati Rice 5kg,Long-grain aromatic rice for everyday meals,16.25,24,Grocery,true
+Whole Wheat Flour 5kg,Whole wheat flour for breads and flatbreads,11.48,94,Grocery,true
+Brown Lentils 1kg,Dried brown lentils for soups and curries,28.87,42,Grocery,true
+Chickpeas 1kg,Dried chickpeas for home cooking,13.15,28,Grocery,true
+Rolled Oats 1kg,Whole-grain oats for breakfast and baking,40.65,79,Grocery,true
+Pasta 500g,Durum wheat pasta for quick meals,26.33,63,Grocery,true
+Tomato Passata 700g,Smooth tomato puree for sauces,25.54,70,Grocery,true
+Olive Oil 500ml,Extra virgin olive oil for cooking and dressings,17.36,176,Grocery,true
+Peanut Butter 340g,Creamy peanut spread for snacks and sandwiches,14.29,92,Grocery,true
+Honey 350g,Pure honey for drinks and breakfast,9.69,54,Grocery,true
+Black Tea 250g,Loose black tea for daily brewing,1.59,53,Grocery,true
+Ground Coffee 250g,Medium-roast ground coffee for home brewing,39.43,110,Grocery,true
+Green Tea 100 Bags,Green tea bags for convenient brewing,28.66,147,Grocery,true
+Coconut Milk 400ml,Coconut milk for curries and desserts,14.50,50,Grocery,true
+Corn Flakes 500g,Crunchy corn cereal for breakfast,24.76,94,Grocery,true
+Dark Chocolate 100g,Dark chocolate bar for a sweet treat,7.48,48,Grocery,true
+Mixed Nuts 500g,Roasted mixed nuts for snacking,25.67,142,Grocery,true
+Dried Dates 500g,Naturally sweet dried dates,15.94,25,Grocery,true
+Sea Salt 500g,Fine sea salt for seasoning food,13.51,78,Grocery,true
+Apple Cider Vinegar 500ml,Vinegar for dressings and cooking,6.98,140,Grocery,false
+Writing Desk 120cm,Compact desk with a spacious work surface,111.30,131,Furniture,true
+Bookshelf 5-Tier,Freestanding shelf for books and storage,135.62,179,Furniture,true
+Bedside Table,Small side table with drawer and lower shelf,267.45,137,Furniture,true
+Coffee Table,Living room table with sturdy legs,219.28,114,Furniture,true
+Dining Chair,Padded dining chair with solid frame,345.61,146,Furniture,true
+Folding Study Table,Space-saving foldable table for study or work,372.65,43,Furniture,true
+Shoe Rack 4-Tier,Entryway rack for organizing footwear,370.69,164,Furniture,true
+Storage Ottoman,Padded ottoman with hidden storage compartment,341.41,105,Furniture,true
+Bar Stool,Counter-height stool with footrest,29.70,127,Furniture,true
+TV Stand 120cm,Media console with shelves for electronics,179.47,17,Furniture,true
+Wardrobe Organizer Set,Fabric organizers for clothing and accessories,206.11,107,Furniture,false
+Drawer Storage Unit,Plastic drawer unit for household storage,328.01,71,Furniture,true
+Adjustable Laptop Table,Height-adjustable table for laptop use,94.04,95,Furniture,true
+Floor Cushion,Large soft cushion for relaxed seating,276.44,80,Furniture,true
+Wall-Mounted Floating Shelf,Minimal shelf for books and decorations,343.69,134,Furniture,true
+Coat Rack,Standing rack with multiple hanging hooks,240.92,165,Furniture,true
+Garden Bench,Outdoor bench with weather-resistant finish,257.90,149,Furniture,true
+Folding Camping Chair,Portable chair with cup holder,184.36,41,Furniture,true
+Laundry Drying Rack,Foldable rack for air-drying clothes,298.97,99,Furniture,true
+Full-Length Mirror,Standing mirror for bedroom or dressing area,19.94,76,Furniture,true
+Dry Dog Food 3kg,Complete dry food for adult dogs,66.30,103,Pet Supplies,false
+Cat Food 2kg,Dry cat food for everyday feeding,8.34,76,Pet Supplies,true
+Stainless Pet Bowl,Non-slip food and water bowl for pets,66.27,144,Pet Supplies,true
+Pet Grooming Brush,Brush for removing loose fur and tangles,36.29,71,Pet Supplies,true
+Adjustable Dog Leash,Durable leash with comfortable grip,75.72,40,Pet Supplies,false
+Reflective Dog Collar,Adjustable collar with reflective stitching,33.19,64,Pet Supplies,false
+Cat Litter 10L,Absorbent litter for indoor cat trays,70.26,109,Pet Supplies,true
+Covered Cat Litter Tray,Covered litter box with removable top,80.17,110,Pet Supplies,true
+Pet Travel Carrier,Ventilated carrier for small pets,22.35,27,Pet Supplies,true
+Plush Dog Toy,Soft toy for supervised play,48.19,11,Pet Supplies,true
+Cat Scratching Post,Scratch post with stable base,21.07,33,Pet Supplies,false
+Pet Nail Clippers,Safety nail clippers for grooming,72.82,170,Pet Supplies,true
+Aquarium Filter,Compact filter for small home aquariums,36.61,58,Pet Supplies,true
+Fish Flakes 100g,Daily fish food flakes for freshwater fish,40.58,140,Pet Supplies,true
+Bird Seed Mix 1kg,Seed blend for common pet birds,53.00,93,Pet Supplies,true
+Small Animal Water Bottle,Drip-resistant water bottle for cage use,68.18,122,Pet Supplies,true
+Pet Waste Bags 120-Pack,Leak-resistant bags for dog walks,64.87,61,Pet Supplies,true
+Pet Shampoo 250ml,Gentle cleansing shampoo for pets,47.36,73,Pet Supplies,true
+Dog Training Clicker,Handheld clicker for reward-based training,63.13,91,Pet Supplies,true
+Pet Cooling Mat,Cooling surface for warm-weather comfort,70.89,28,Pet Supplies,true
+Car Phone Mount,Adjustable dashboard phone holder,102.66,95,Automotive,true
+USB Car Charger Dual Port,Dual-port charger for vehicle power sockets,13.86,98,Automotive,true
+Microfiber Car Towels 6-Pack,Soft towels for vehicle cleaning,99.36,41,Automotive,true
+Portable Tire Inflator,Compact electric inflator with pressure gauge,102.19,112,Automotive,true
+Jump Starter 1000A,Portable battery booster for compatible vehicles,233.04,38,Automotive,true
+Windshield Sun Shade,Foldable shade to reduce cabin heat,68.55,68,Automotive,true
+Car Seat Organizer,Storage organizer for vehicle seatback,50.94,132,Automotive,true
+Rubber Floor Mats Set,All-weather floor mats for compatible vehicles,125.53,177,Automotive,true
+Emergency Roadside Kit,Basic roadside safety and repair supplies,207.15,154,Automotive,true
+Car Wash Shampoo 1L,Concentrated shampoo for exterior car washing,18.07,7,Automotive,true
+Tire Pressure Gauge,Handheld gauge for checking tire pressure,83.08,52,Automotive,true
+LED Flashlight,Rechargeable flashlight for vehicle emergencies,118.83,68,Automotive,true
+Trunk Storage Organizer,Foldable organizer for cargo storage,223.24,175,Automotive,true
+Portable Vacuum Cleaner,Compact vacuum for vehicle interiors,8.97,134,Automotive,true
+Ice Scraper,Handheld scraper for removing frost from glass,219.16,149,Automotive,true
+Motorcycle Phone Holder,Handlebar mount for compatible smartphones,234.02,43,Automotive,true
+Car Air Freshener 3-Pack,Vent clip fresheners in assorted scents,136.40,85,Automotive,false
+Reflective Safety Vest,High-visibility vest for roadside use,69.79,144,Automotive,true
+Seat Belt Cushion Pair,Soft shoulder pads for seat belt comfort,21.86,165,Automotive,true
+Motor Oil 1L,Engine oil for vehicles requiring the specified grade,220.43,26,Automotive,true
+Watercolor Sketchbook A4,Heavyweight paper sketchbook for wet media,64.51,119,Stationery,true
+Graphite Pencil Set 12-Pack,Drawing pencils in assorted graphite grades,28.68,57,Stationery,true
+Acrylic Paint Set 12 Colors,Acrylic paints for craft and art projects,59.83,157,Stationery,true
+Paintbrush Set 10-Pack,Assorted brushes for painting and crafts,12.61,124,Stationery,true
+Craft Scoring Tool,Hand tool for creasing paper and cardstock,17.61,21,Stationery,true
+Colored Pencils 24-Pack,Color pencils for drawing and coloring,62.53,19,Stationery,true
+Calligraphy Pen Set,Pen set for lettering and decorative writing,68.82,59,Stationery,true
+Origami Paper 100 Sheets,Colorful square paper for folding crafts,56.38,136,Stationery,true
+Glue Stick 3-Pack,Washable glue sticks for paper projects,59.10,174,Stationery,false
+Craft Storage Box,Compartment box for small art supplies,15.49,75,Stationery,false
+Bullet Journal A5,Dotted journal for planning and notes,54.04,17,Stationery,true
+Index Cards 100-Pack,Ruled cards for revision and study notes,67.77,140,Stationery,true
+Envelope Pack 50,White envelopes for letters and documents,2.93,78,Stationery,true
+Correction Tape 2-Pack,Dry correction tape for paper documents,46.98,156,Stationery,true
+Paper Clips 200-Pack,Metal clips for holding papers together,42.49,5,Stationery,true
+Binder Clips Assorted Set,Reusable clips in assorted sizes,64.66,19,Stationery,true
+Desk Calendar,Monthly desktop calendar for date planning,32.79,44,Stationery,true
+Sketching Charcoal Set,Charcoal sticks and pencils for drawing,41.03,130,Stationery,true
+Poster Board 10-Pack,Sheets of poster board for presentations,11.87,88,Stationery,true
+Label Stickers 500-Pack,Adhesive labels for organizing and packaging,73.76,43,Stationery,true
+Compact USB-C Charger,Practical accessory for everyday use with durable materials,74.09,41,Accessories,true
+Compact Braided USB-C Cable,Practical accessory for everyday use with durable materials,12.12,42,Accessories,true
+Compact Wireless Mouse,Practical accessory for everyday use with durable materials,27.90,177,Accessories,true
+Compact Laptop Stand,Practical accessory for everyday use with durable materials,17.56,155,Accessories,true
+Compact Bluetooth Speaker,Practical accessory for everyday use with durable materials,44.62,173,Accessories,true
+Compact Power Bank,Practical accessory for everyday use with durable materials,30.26,78,Accessories,true
+Compact Webcam,Practical accessory for everyday use with durable materials,96.13,73,Accessories,true
+Compact USB-C Hub,Practical accessory for everyday use with durable materials,28.44,84,Accessories,true
+Compact Phone Stand,Practical accessory for everyday use with durable materials,108.11,160,Accessories,true
+Compact External SSD,Practical accessory for everyday use with durable materials,125.69,144,Accessories,true
+Premium USB-C Charger,Practical accessory for everyday use with durable materials,127.82,91,Accessories,true
+Premium Braided USB-C Cable,Practical accessory for everyday use with durable materials,53.34,167,Accessories,true
+Premium Wireless Mouse,Practical accessory for everyday use with durable materials,34.70,28,Accessories,false
+Premium Laptop Stand,Practical accessory for everyday use with durable materials,28.82,158,Accessories,true
+Premium Bluetooth Speaker,Practical accessory for everyday use with durable materials,82.89,5,Accessories,true
+Premium Power Bank,Practical accessory for everyday use with durable materials,125.50,131,Accessories,true
+Premium Webcam,Practical accessory for everyday use with durable materials,110.21,47,Accessories,true
+Premium USB-C Hub,Practical accessory for everyday use with durable materials,13.27,63,Accessories,true
+Premium Phone Stand,Practical accessory for everyday use with durable materials,116.95,163,Accessories,true
+Premium External SSD,Practical accessory for everyday use with durable materials,60.79,169,Accessories,true
+Travel USB-C Charger,Practical accessory for everyday use with durable materials,41.09,169,Accessories,true
+Travel Braided USB-C Cable,Practical accessory for everyday use with durable materials,20.85,20,Accessories,true
+Travel Wireless Mouse,Practical accessory for everyday use with durable materials,145.63,23,Accessories,true
+Travel Laptop Stand,Practical accessory for everyday use with durable materials,66.65,162,Accessories,true
+Travel Bluetooth Speaker,Practical accessory for everyday use with durable materials,144.67,17,Accessories,true
+Travel Power Bank,Practical accessory for everyday use with durable materials,78.69,152,Accessories,true
+Travel Webcam,Practical accessory for everyday use with durable materials,71.81,83,Accessories,true
+Travel USB-C Hub,Practical accessory for everyday use with durable materials,93.09,11,Accessories,true
+Travel Phone Stand,Practical accessory for everyday use with durable materials,65.35,41,Accessories,true
+Travel External SSD,Practical accessory for everyday use with durable materials,126.76,176,Accessories,true
+Aluminum USB-C Charger,Practical accessory for everyday use with durable materials,67.82,91,Accessories,true
+Aluminum Braided USB-C Cable,Practical accessory for everyday use with durable materials,12.97,21,Accessories,true
+Aluminum Wireless Mouse,Practical accessory for everyday use with durable materials,131.23,65,Accessories,true
+Aluminum Laptop Stand,Practical accessory for everyday use with durable materials,133.34,100,Accessories,true
+Aluminum Bluetooth Speaker,Practical accessory for everyday use with durable materials,18.02,24,Accessories,true
+Aluminum Power Bank,Practical accessory for everyday use with durable materials,135.60,179,Accessories,true
+Aluminum Webcam,Practical accessory for everyday use with durable materials,93.87,68,Accessories,true
+Aluminum USB-C Hub,Practical accessory for everyday use with durable materials,70.06,15,Accessories,true
+Aluminum Phone Stand,Practical accessory for everyday use with durable materials,83.09,67,Accessories,true
+Aluminum External SSD,Practical accessory for everyday use with durable materials,148.73,86,Accessories,true
+Fast-Charging USB-C Charger,Practical accessory for everyday use with durable materials,133.58,115,Accessories,true
+Fast-Charging Braided USB-C Cable,Practical accessory for everyday use with durable materials,29.63,15,Accessories,true
+Fast-Charging Wireless Mouse,Practical accessory for everyday use with durable materials,52.33,66,Accessories,true
+Fast-Charging Laptop Stand,Practical accessory for everyday use with durable materials,11.61,73,Accessories,true
+Fast-Charging Bluetooth Speaker,Practical accessory for everyday use with durable materials,131.37,53,Accessories,false
+Fast-Charging Power Bank,Practical accessory for everyday use with durable materials,34.72,127,Accessories,true
+Fast-Charging Webcam,Practical accessory for everyday use with durable materials,5.87,39,Accessories,true
+Fast-Charging USB-C Hub,Practical accessory for everyday use with durable materials,74.47,142,Accessories,true
+Fast-Charging Phone Stand,Practical accessory for everyday use with durable materials,81.35,31,Accessories,false
+Fast-Charging External SSD,Practical accessory for everyday use with durable materials,66.15,138,Accessories,true
+Foldable USB-C Charger,Practical accessory for everyday use with durable materials,87.30,171,Accessories,true
+Foldable Braided USB-C Cable,Practical accessory for everyday use with durable materials,136.72,152,Accessories,true
+Foldable Wireless Mouse,Practical accessory for everyday use with durable materials,92.91,121,Accessories,true
+Foldable Laptop Stand,Practical accessory for everyday use with durable materials,62.88,63,Accessories,false
+Foldable Bluetooth Speaker,Practical accessory for everyday use with durable materials,39.81,52,Accessories,true
+Foldable Power Bank,Practical accessory for everyday use with durable materials,17.19,7,Accessories,true
+Foldable Webcam,Practical accessory for everyday use with durable materials,99.81,24,Accessories,false
+Foldable USB-C Hub,Practical accessory for everyday use with durable materials,25.89,81,Accessories,true
+Foldable Phone Stand,Practical accessory for everyday use with durable materials,19.04,134,Accessories,true
+Foldable External SSD,Practical accessory for everyday use with durable materials,128.07,74,Accessories,true
+Portable USB-C Charger,Practical accessory for everyday use with durable materials,70.15,119,Accessories,true
+Portable Braided USB-C Cable,Practical accessory for everyday use with durable materials,5.31,73,Accessories,true
+Portable Wireless Mouse,Practical accessory for everyday use with durable materials,139.38,122,Accessories,true
+Portable Laptop Stand,Practical accessory for everyday use with durable materials,14.34,101,Accessories,true
+Portable Bluetooth Speaker,Practical accessory for everyday use with durable materials,85.60,86,Accessories,true
+Portable Power Bank,Practical accessory for everyday use with durable materials,139.44,92,Accessories,true
+Portable Webcam,Practical accessory for everyday use with durable materials,15.68,146,Accessories,true
+Portable USB-C Hub,Practical accessory for everyday use with durable materials,9.43,159,Accessories,true
+Portable Phone Stand,Practical accessory for everyday use with durable materials,72.66,104,Accessories,true
+Portable External SSD,Practical accessory for everyday use with durable materials,18.83,94,Accessories,true
+Slim USB-C Charger,Practical accessory for everyday use with durable materials,35.22,138,Accessories,true
+Slim Braided USB-C Cable,Practical accessory for everyday use with durable materials,38.41,135,Accessories,true
+Slim Wireless Mouse,Practical accessory for everyday use with durable materials,105.72,120,Accessories,true
+Slim Laptop Stand,Practical accessory for everyday use with durable materials,140.12,83,Accessories,true
+Slim Bluetooth Speaker,Practical accessory for everyday use with durable materials,46.90,65,Accessories,true
+Slim Power Bank,Practical accessory for everyday use with durable materials,106.80,43,Accessories,true
+Slim Webcam,Practical accessory for everyday use with durable materials,73.54,137,Accessories,true
+Slim USB-C Hub,Practical accessory for everyday use with durable materials,10.69,83,Accessories,true
+Slim Phone Stand,Practical accessory for everyday use with durable materials,140.89,33,Accessories,true
+Slim External SSD,Practical accessory for everyday use with durable materials,35.54,96,Accessories,true
+Multiport USB-C Charger,Practical accessory for everyday use with durable materials,52.83,69,Accessories,true
+Multiport Braided USB-C Cable,Practical accessory for everyday use with durable materials,97.51,69,Accessories,true
+Multiport Wireless Mouse,Practical accessory for everyday use with durable materials,118.53,40,Accessories,true
+Multiport Laptop Stand,Practical accessory for everyday use with durable materials,74.41,179,Accessories,false
+Multiport Bluetooth Speaker,Practical accessory for everyday use with durable materials,47.18,85,Accessories,false
+Multiport Power Bank,Practical accessory for everyday use with durable materials,114.35,80,Accessories,false
+Multiport Webcam,Practical accessory for everyday use with durable materials,39.90,70,Accessories,true
+Multiport USB-C Hub,Practical accessory for everyday use with durable materials,29.57,105,Accessories,true
+Multiport Phone Stand,Practical accessory for everyday use with durable materials,25.95,39,Accessories,true
+Multiport External SSD,Practical accessory for everyday use with durable materials,7.80,153,Accessories,true
+Rechargeable USB-C Charger,Practical accessory for everyday use with durable materials,133.80,115,Accessories,true
+Rechargeable Braided USB-C Cable,Practical accessory for everyday use with durable materials,22.93,158,Accessories,true
+Rechargeable Wireless Mouse,Practical accessory for everyday use with durable materials,33.43,168,Accessories,true
+Rechargeable Laptop Stand,Practical accessory for everyday use with durable materials,91.55,91,Accessories,true
+Rechargeable Bluetooth Speaker,Practical accessory for everyday use with durable materials,88.52,144,Accessories,false
+Rechargeable Power Bank,Practical accessory for everyday use with durable materials,33.05,75,Accessories,true
+Rechargeable Webcam,Practical accessory for everyday use with durable materials,129.54,45,Accessories,true
+Rechargeable USB-C Hub,Practical accessory for everyday use with durable materials,81.31,60,Accessories,true
+Rechargeable Phone Stand,Practical accessory for everyday use with durable materials,130.58,166,Accessories,true
+Rechargeable External SSD,Practical accessory for everyday use with durable materials,137.41,161,Accessories,true
+Classic Oxford Shirt,Comfortable everyday apparel designed for regular wear,101.42,89,Clothing,true
+Classic Zip Hoodie,Comfortable everyday apparel designed for regular wear,41.94,82,Clothing,true
+Classic Denim Jeans,Comfortable everyday apparel designed for regular wear,22.13,45,Clothing,true
+Classic Running Shorts,Comfortable everyday apparel designed for regular wear,51.73,162,Clothing,true
+Classic Rain Jacket,Comfortable everyday apparel designed for regular wear,47.93,76,Clothing,true
+Classic Canvas Sneakers,Comfortable everyday apparel designed for regular wear,20.53,17,Clothing,false
+Classic Crew Socks,Comfortable everyday apparel designed for regular wear,108.76,98,Clothing,true
+Classic Baseball Cap,Comfortable everyday apparel designed for regular wear,21.50,109,Clothing,true
+Classic Sports Leggings,Comfortable everyday apparel designed for regular wear,35.50,68,Clothing,true
+Everyday Cotton T-Shirt,Comfortable everyday apparel designed for regular wear,85.77,59,Clothing,true
+Everyday Oxford Shirt,Comfortable everyday apparel designed for regular wear,27.53,60,Clothing,true
+Everyday Zip Hoodie,Comfortable everyday apparel designed for regular wear,77.62,43,Clothing,true
+Everyday Denim Jeans,Comfortable everyday apparel designed for regular wear,27.38,46,Clothing,false
+Everyday Running Shorts,Comfortable everyday apparel designed for regular wear,80.07,96,Clothing,true
+Everyday Rain Jacket,Comfortable everyday apparel designed for regular wear,55.27,134,Clothing,false
+Everyday Canvas Sneakers,Comfortable everyday apparel designed for regular wear,97.52,109,Clothing,true
+Everyday Crew Socks,Comfortable everyday apparel designed for regular wear,18.17,147,Clothing,true
+Everyday Baseball Cap,Comfortable everyday apparel designed for regular wear,86.03,171,Clothing,true
+Everyday Sports Leggings,Comfortable everyday apparel designed for regular wear,116.10,109,Clothing,true
+Lightweight Cotton T-Shirt,Comfortable everyday apparel designed for regular wear,76.95,96,Clothing,true
+Lightweight Oxford Shirt,Comfortable everyday apparel designed for regular wear,79.61,116,Clothing,true
+Lightweight Zip Hoodie,Comfortable everyday apparel designed for regular wear,6.71,10,Clothing,true
+Lightweight Denim Jeans,Comfortable everyday apparel designed for regular wear,6.81,68,Clothing,true
+Lightweight Running Shorts,Comfortable everyday apparel designed for regular wear,82.79,121,Clothing,true
+Lightweight Rain Jacket,Comfortable everyday apparel designed for regular wear,52.34,147,Clothing,true
+Lightweight Canvas Sneakers,Comfortable everyday apparel designed for regular wear,20.56,178,Clothing,true
+Lightweight Crew Socks,Comfortable everyday apparel designed for regular wear,13.58,22,Clothing,true
+Lightweight Baseball Cap,Comfortable everyday apparel designed for regular wear,46.39,128,Clothing,true
+Lightweight Sports Leggings,Comfortable everyday apparel designed for regular wear,64.67,83,Clothing,true
+Relaxed-Fit Cotton T-Shirt,Comfortable everyday apparel designed for regular wear,115.38,170,Clothing,true
+Relaxed-Fit Oxford Shirt,Comfortable everyday apparel designed for regular wear,25.90,15,Clothing,true
+Relaxed-Fit Zip Hoodie,Comfortable everyday apparel designed for regular wear,66.84,68,Clothing,true
+Relaxed-Fit Denim Jeans,Comfortable everyday apparel designed for regular wear,79.61,52,Clothing,true
+Relaxed-Fit Running Shorts,Comfortable everyday apparel designed for regular wear,106.77,118,Clothing,false
+Relaxed-Fit Rain Jacket,Comfortable everyday apparel designed for regular wear,111.17,95,Clothing,true
+Relaxed-Fit Canvas Sneakers,Comfortable everyday apparel designed for regular wear,15.48,131,Clothing,true
+Relaxed-Fit Crew Socks,Comfortable everyday apparel designed for regular wear,40.46,176,Clothing,true
+Relaxed-Fit Baseball Cap,Comfortable everyday apparel designed for regular wear,26.49,175,Clothing,true
+Relaxed-Fit Sports Leggings,Comfortable everyday apparel designed for regular wear,64.49,39,Clothing,true
+Slim-Fit Cotton T-Shirt,Comfortable everyday apparel designed for regular wear,83.88,58,Clothing,true
+Slim-Fit Oxford Shirt,Comfortable everyday apparel designed for regular wear,95.89,153,Clothing,false
+Slim-Fit Zip Hoodie,Comfortable everyday apparel designed for regular wear,98.31,51,Clothing,true
+Slim-Fit Denim Jeans,Comfortable everyday apparel designed for regular wear,119.63,44,Clothing,true
+Slim-Fit Running Shorts,Comfortable everyday apparel designed for regular wear,112.87,171,Clothing,true
+Slim-Fit Rain Jacket,Comfortable everyday apparel designed for regular wear,118.84,56,Clothing,true
+Slim-Fit Canvas Sneakers,Comfortable everyday apparel designed for regular wear,46.36,132,Clothing,true
+Slim-Fit Crew Socks,Comfortable everyday apparel designed for regular wear,38.05,118,Clothing,false
+Slim-Fit Baseball Cap,Comfortable everyday apparel designed for regular wear,26.09,179,Clothing,true
+Slim-Fit Sports Leggings,Comfortable everyday apparel designed for regular wear,76.18,114,Clothing,true
+Quick-Dry Cotton T-Shirt,Comfortable everyday apparel designed for regular wear,114.91,124,Clothing,true
+Quick-Dry Oxford Shirt,Comfortable everyday apparel designed for regular wear,20.92,173,Clothing,true
+Quick-Dry Zip Hoodie,Comfortable everyday apparel designed for regular wear,96.80,121,Clothing,true
+Quick-Dry Denim Jeans,Comfortable everyday apparel designed for regular wear,54.82,131,Clothing,true
+Quick-Dry Running Shorts,Comfortable everyday apparel designed for regular wear,49.51,95,Clothing,true
+Quick-Dry Rain Jacket,Comfortable everyday apparel designed for regular wear,8.82,80,Clothing,true
+Quick-Dry Canvas Sneakers,Comfortable everyday apparel designed for regular wear,52.39,57,Clothing,true
+Quick-Dry Crew Socks,Comfortable everyday apparel designed for regular wear,86.75,118,Clothing,true
+Quick-Dry Baseball Cap,Comfortable everyday apparel designed for regular wear,45.55,171,Clothing,true
+Quick-Dry Sports Leggings,Comfortable everyday apparel designed for regular wear,110.74,19,Clothing,true
+Soft Cotton Cotton T-Shirt,Comfortable everyday apparel designed for regular wear,42.30,68,Clothing,true
+Soft Cotton Oxford Shirt,Comfortable everyday apparel designed for regular wear,94.27,149,Clothing,true
+Soft Cotton Zip Hoodie,Comfortable everyday apparel designed for regular wear,15.72,80,Clothing,true
+Soft Cotton Denim Jeans,Comfortable everyday apparel designed for regular wear,109.86,33,Clothing,false
+Soft Cotton Running Shorts,Comfortable everyday apparel designed for regular wear,67.56,153,Clothing,true
+Soft Cotton Rain Jacket,Comfortable everyday apparel designed for regular wear,118.52,49,Clothing,true
+Soft Cotton Canvas Sneakers,Comfortable everyday apparel designed for regular wear,19.62,159,Clothing,true
+Soft Cotton Crew Socks,Comfortable everyday apparel designed for regular wear,22.75,150,Clothing,false
+Soft Cotton Baseball Cap,Comfortable everyday apparel designed for regular wear,41.10,135,Clothing,true
+Soft Cotton Sports Leggings,Comfortable everyday apparel designed for regular wear,54.60,10,Clothing,true
+Outdoor Cotton T-Shirt,Comfortable everyday apparel designed for regular wear,15.14,73,Clothing,true
+Outdoor Oxford Shirt,Comfortable everyday apparel designed for regular wear,73.68,161,Clothing,true
+Outdoor Zip Hoodie,Comfortable everyday apparel designed for regular wear,43.73,71,Clothing,true
+Outdoor Denim Jeans,Comfortable everyday apparel designed for regular wear,112.04,31,Clothing,true
+Outdoor Running Shorts,Comfortable everyday apparel designed for regular wear,27.43,100,Clothing,true
+Outdoor Rain Jacket,Comfortable everyday apparel designed for regular wear,78.57,27,Clothing,true
+Outdoor Canvas Sneakers,Comfortable everyday apparel designed for regular wear,84.26,150,Clothing,false
+Outdoor Crew Socks,Comfortable everyday apparel designed for regular wear,80.77,172,Clothing,true
+Outdoor Baseball Cap,Comfortable everyday apparel designed for regular wear,70.34,76,Clothing,true
+Outdoor Sports Leggings,Comfortable everyday apparel designed for regular wear,5.66,104,Clothing,true
+Essential Cotton T-Shirt,Comfortable everyday apparel designed for regular wear,57.00,7,Clothing,false
+Essential Oxford Shirt,Comfortable everyday apparel designed for regular wear,93.89,60,Clothing,true
+Essential Zip Hoodie,Comfortable everyday apparel designed for regular wear,32.49,106,Clothing,false
+Essential Denim Jeans,Comfortable everyday apparel designed for regular wear,66.22,44,Clothing,true
+Essential Running Shorts,Comfortable everyday apparel designed for regular wear,11.16,171,Clothing,true
+Essential Rain Jacket,Comfortable everyday apparel designed for regular wear,102.93,146,Clothing,true
+Essential Canvas Sneakers,Comfortable everyday apparel designed for regular wear,110.68,112,Clothing,true
+Essential Crew Socks,Comfortable everyday apparel designed for regular wear,31.05,150,Clothing,true
+Essential Baseball Cap,Comfortable everyday apparel designed for regular wear,59.22,48,Clothing,true
+Essential Sports Leggings,Comfortable everyday apparel designed for regular wear,86.32,116,Clothing,true
+Performance Cotton T-Shirt,Comfortable everyday apparel designed for regular wear,53.88,12,Clothing,true
+Performance Oxford Shirt,Comfortable everyday apparel designed for regular wear,112.15,111,Clothing,true
+Performance Zip Hoodie,Comfortable everyday apparel designed for regular wear,35.78,96,Clothing,true
+Performance Denim Jeans,Comfortable everyday apparel designed for regular wear,31.96,8,Clothing,true
+Performance Running Shorts,Comfortable everyday apparel designed for regular wear,41.18,108,Clothing,true
+Performance Rain Jacket,Comfortable everyday apparel designed for regular wear,24.73,150,Clothing,true
+Performance Canvas Sneakers,Comfortable everyday apparel designed for regular wear,104.09,54,Clothing,true
+Performance Crew Socks,Comfortable everyday apparel designed for regular wear,69.61,61,Clothing,true
+Performance Baseball Cap,Comfortable everyday apparel designed for regular wear,116.88,125,Clothing,true
+Performance Sports Leggings,Comfortable everyday apparel designed for regular wear,6.74,18,Clothing,true
+Modern Dinner Plate Set,Useful household item designed for daily home use,133.53,165,Home,true
+Modern Food Storage Set,Useful household item designed for daily home use,64.58,50,Home,false
+Modern Frying Pan,Useful household item designed for daily home use,176.32,72,Home,true
+Modern Water Bottle,Useful household item designed for daily home use,82.38,19,Home,true
+Modern Bath Towel,Useful household item designed for daily home use,68.52,115,Home,true
+Modern LED Desk Lamp,Useful household item designed for daily home use,27.96,24,Home,true
+Modern Pillow,Useful household item designed for daily home use,70.49,87,Home,true
+Modern Laundry Basket,Useful household item designed for daily home use,33.58,29,Home,true
+Modern Wall Clock,Useful household item designed for daily home use,73.20,176,Home,true
+Modern Ceramic Planter,Useful household item designed for daily home use,45.42,111,Home,true
+Classic Dinner Plate Set,Useful household item designed for daily home use,15.03,18,Home,true
+Classic Food Storage Set,Useful household item designed for daily home use,108.27,166,Home,true
+Classic Frying Pan,Useful household item designed for daily home use,115.79,173,Home,true
+Classic Water Bottle,Useful household item designed for daily home use,20.61,112,Home,true
+Classic Bath Towel,Useful household item designed for daily home use,19.13,50,Home,true
+Classic LED Desk Lamp,Useful household item designed for daily home use,113.70,45,Home,true
+Classic Pillow,Useful household item designed for daily home use,171.66,136,Home,true
+Classic Laundry Basket,Useful household item designed for daily home use,132.99,86,Home,true
+Classic Wall Clock,Useful household item designed for daily home use,50.77,142,Home,true
+Classic Ceramic Planter,Useful household item designed for daily home use,7.67,171,Home,true
+Compact Dinner Plate Set,Useful household item designed for daily home use,160.57,174,Home,true
+Compact Food Storage Set,Useful household item designed for daily home use,89.86,118,Home,false
+Compact Frying Pan,Useful household item designed for daily home use,108.60,175,Home,true
+Compact Water Bottle,Useful household item designed for daily home use,127.88,19,Home,true
+Compact Bath Towel,Useful household item designed for daily home use,164.80,142,Home,true
+Compact LED Desk Lamp,Useful household item designed for daily home use,174.85,155,Home,true
+Compact Pillow,Useful household item designed for daily home use,70.82,48,Home,true
+Compact Laundry Basket,Useful household item designed for daily home use,116.00,132,Home,true
+Compact Wall Clock,Useful household item designed for daily home use,100.34,89,Home,true
+Compact Ceramic Planter,Useful household item designed for daily home use,116.27,143,Home,true
+Large Dinner Plate Set,Useful household item designed for daily home use,112.51,36,Home,true
+Large Food Storage Set,Useful household item designed for daily home use,130.90,105,Home,true
+Large Frying Pan,Useful household item designed for daily home use,74.07,101,Home,true
+Large Water Bottle,Useful household item designed for daily home use,100.44,78,Home,true
+Large Bath Towel,Useful household item designed for daily home use,152.19,17,Home,true
+Large LED Desk Lamp,Useful household item designed for daily home use,178.12,120,Home,true
+Large Pillow,Useful household item designed for daily home use,82.28,160,Home,true
+Large Laundry Basket,Useful household item designed for daily home use,61.04,126,Home,true
+Large Wall Clock,Useful household item designed for daily home use,12.08,108,Home,true
+Large Ceramic Planter,Useful household item designed for daily home use,159.67,80,Home,true
+Everyday Dinner Plate Set,Useful household item designed for daily home use,50.27,91,Home,true
+Everyday Food Storage Set,Useful household item designed for daily home use,154.43,149,Home,true
+Everyday Frying Pan,Useful household item designed for daily home use,103.75,134,Home,true
+Everyday Water Bottle,Useful household item designed for daily home use,177.72,137,Home,true
+Everyday Bath Towel,Useful household item designed for daily home use,158.99,125,Home,true
+Everyday LED Desk Lamp,Useful household item designed for daily home use,63.42,128,Home,true
+Everyday Pillow,Useful household item designed for daily home use,77.54,26,Home,true
+Everyday Laundry Basket,Useful household item designed for daily home use,35.09,138,Home,true
+Everyday Wall Clock,Useful household item designed for daily home use,7.51,147,Home,true
+Everyday Ceramic Planter,Useful household item designed for daily home use,83.39,51,Home,false
+Insulated Dinner Plate Set,Useful household item designed for daily home use,135.40,90,Home,true
+Insulated Food Storage Set,Useful household item designed for daily home use,37.20,69,Home,true
+Insulated Frying Pan,Useful household item designed for daily home use,100.79,114,Home,true
+Insulated Water Bottle,Useful household item designed for daily home use,88.99,72,Home,true
+Insulated Bath Towel,Useful household item designed for daily home use,114.27,151,Home,true
+Insulated LED Desk Lamp,Useful household item designed for daily home use,84.89,35,Home,true
+Insulated Pillow,Useful household item designed for daily home use,38.05,74,Home,true
+Insulated Laundry Basket,Useful household item designed for daily home use,24.66,91,Home,true
+Insulated Wall Clock,Useful household item designed for daily home use,66.57,13,Home,true
+Insulated Ceramic Planter,Useful household item designed for daily home use,143.07,28,Home,true
+Stackable Dinner Plate Set,Useful household item designed for daily home use,134.11,34,Home,true
