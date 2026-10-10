@@ -359,6 +359,26 @@ SCENARIOS: list[Scenario] = [
         no_prompt_leak,
         ["§34"],
     ),
+        Scenario(
+        "18 laptop catalogue",
+        ["Do you sell laptops?"],
+        mentions_any("inspiron", "ideapad", "pavilion"),
+    ),
+    Scenario(
+        "19 webcam search",
+        ["Do you have a webcam?"],
+        mentions_any("c920", "webcam"),
+    ),
+    Scenario(
+        "20 monitor search",
+        ["What monitors do you sell?"],
+        mentions_any("dell", "lg", "monitor"),
+    ),
+    Scenario(
+        "21 USB-C hub search",
+        ["Do you sell USB-C hubs?"],
+        mentions_any("anker", "usb-c hub"),
+    ),
 ]
 
 

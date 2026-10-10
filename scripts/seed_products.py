@@ -19,6 +19,17 @@ PRODUCTS = [
     ("Anker 65W USB-C Charger", "Fast GaN wall charger, 2 ports", "29.00", 25, "Accessories", True),
     ("Samsung 27in Full HD Monitor", "27-inch IPS monitor, 75Hz", "159.00", 6, "Monitors", True),
     ("Legacy PS/2 Keyboard", "Discontinued model", "9.00", 3, "Keyboards", False),
+    ("Logitech K120 Wired Keyboard", "Full-size USB office keyboard", "12.00", 35, "Keyboards", True),
+    ("Keychron K6 Mechanical Keyboard", "Compact wireless mechanical keyboard", "79.00", 9, "Keyboards", True),
+    ("Logitech G502 HERO Gaming Mouse", "Wired gaming mouse with customizable buttons", "45.00", 11, "Mice", True),
+    ("Microsoft Bluetooth Mouse", "Compact Bluetooth mouse", "24.00", 18, "Mice", True),
+    ("Dell Inspiron 15 Laptop", "15.6-inch laptop for work and study", "649.00", 8, "Laptops", True),
+    ("Lenovo IdeaPad Slim 3", "Laptop for everyday work and study", "499.00", 12, "Laptops", True),
+    ("HP Pavilion 14 Laptop", "14-inch laptop with SSD storage", "579.00", 6, "Laptops", True),
+    ("Dell 24-inch Full HD Monitor", "24-inch Full HD monitor", "139.00", 7, "Monitors", True),
+    ("LG 27-inch QHD Monitor", "27-inch QHD productivity monitor", "279.00", 4, "Monitors", True),
+    ("Logitech C920 HD Webcam", "1080p webcam for video calls", "69.00", 10, "Webcams", True),
+    ("Anker USB-C Hub 7-in-1", "USB-C hub with HDMI and USB ports", "39.00", 14, "Accessories", True),
 ]
 
 
