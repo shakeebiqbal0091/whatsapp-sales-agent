@@ -16,12 +16,25 @@ class SearchProductsArgs(BaseModel):
 
 
 class ProductIdArgs(BaseModel):
-    product_id: int = Field(ge=1, description="Product id returned by search_products.")
+    product_id: str = Field(
+        min_length=1,
+        max_length=100,
+        description="Product ID returned by search_products.",
+    )
 
 
 class CheckStockArgs(BaseModel):
-    product_id: int = Field(ge=1, description="Product id returned by search_products.")
-    quantity: int | None = Field(default=None, ge=1, le=100_000, description="Units the customer wants, if stated.")
+    product_id: str = Field(
+        min_length=1,
+        max_length=100,
+        description="Product ID returned by search_products.",
+    )
+    quantity: int | None = Field(
+        default=None,
+        ge=1,
+        le=100_000,
+        description="Units the customer wants, if stated.",
+    )
 
 
 def build_product_tools(session: Session, currency: str) -> list[BaseTool]:
@@ -44,7 +57,7 @@ def build_product_tools(session: Session, currency: str) -> list[BaseTool]:
         return result
 
     @tool("get_product", args_schema=ProductIdArgs)
-    def get_product(product_id: int) -> dict:
+    def get_product(product_id: str) -> dict:
         """Get full details (description, price, category, availability) for one product id."""
         product = service.get_product(product_id)
         logger.info("tool get_product found=%s", product is not None)
@@ -53,7 +66,7 @@ def build_product_tools(session: Session, currency: str) -> list[BaseTool]:
         return {"found": True, "product": product.model_dump(mode="json")}
 
     @tool("check_stock", args_schema=CheckStockArgs)
-    def check_stock(product_id: int, quantity: int | None = None) -> dict:
+    def check_stock(product_id: str, quantity: int | None = None) -> dict:
         """Check real stock for a product id, optionally against a requested quantity."""
         check = service.check_stock(product_id, quantity)
         logger.info("tool check_stock found=%s", check is not None)
