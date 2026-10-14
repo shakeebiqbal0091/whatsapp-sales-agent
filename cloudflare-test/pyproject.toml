@@ -1,0 +1,14 @@
+[project]
+name = "whatsapp-sales-agent-test"
+version = "0.1.0"
+description = "Isolated Cloudflare Python Worker test"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi",
+]
+
+[dependency-groups]
+dev = [
+    "workers-py",
+    "workers-runtime-sdk",
+]
