@@ -315,6 +315,332 @@ def test_duplicate_event_is_processed_only_once(
 
 
 @pytest.mark.anyio
+async def test_duplicate_escalated_webhook_sends_one_handoff_reply(
+    session_factory, settings, monkeypatch
+):
+    from sqlalchemy import func, select
+
+    from app.database.models import Conversation, Customer, Message
+    from app.services.chat_service import HANDOFF_REPLY
+    from app.services.conversation_service import ConversationService
+    from app.services.customer_service import CustomerService
+    from app.whatsapp.rate_limit import Decision
+
+    phone = "+923001234567"
+    with session_factory() as session:
+        customer = CustomerService(session).identify(phone)
+        conversations = ConversationService(session)
+        conversation = conversations.get_or_open(customer.id)
+        conversations.add_message(conversation.id, "user", "Pending human request")
+        conversations.escalate(conversation.id, "human review")
+        session.commit()
+        escalated_id = conversation.id
+
+    class AllowLimiter:
+        @staticmethod
+        def check(_key):
+            return Decision.ALLOW
+
+    class FakeWhatsAppClient:
+        def __init__(self):
+            self.sent = []
+
+        async def send_text(self, _phone, body):
+            self.sent.append(body)
+            return True
+
+    client = FakeWhatsAppClient()
+    monkeypatch.setattr(webhook, "get_rate_limiter", lambda: AllowLimiter())
+    message = IncomingMessage(
+        message_id="wamid.ESCALATED_DUPLICATE_TEST",
+        phone=phone,
+        text="Is anyone there?",
+    )
+
+    await webhook.process_message(message, session_factory, None, settings, client)
+    await webhook.process_message(message, session_factory, None, settings, client)
+
+    assert client.sent == [HANDOFF_REPLY]
+    with session_factory() as session:
+        assert session.scalar(select(func.count(Conversation.id))) == 1
+        conversation = session.get(Conversation, escalated_id)
+        assert conversation.status == "escalated"
+        messages = list(
+            session.scalars(
+                select(Message)
+                .where(Message.conversation_id == escalated_id)
+                .order_by(Message.id)
+            )
+        )
+        assert len(messages) == 3
+        assert messages[-1].content == HANDOFF_REPLY
+
+
+@pytest.mark.anyio
+async def test_new_question_uses_separate_conversation_and_preserves_escalation(
+    session_factory, settings, monkeypatch
+):
+    from langchain_core.messages import AIMessage, HumanMessage
+    from sqlalchemy import select
+
+    from app.database.models import Conversation, Customer, Message
+    from app.services import chat_service
+    from app.services.chat_service import HANDOFF_REPLY
+    from app.services.conversation_service import ConversationService
+    from app.services.customer_service import CustomerService
+    from app.whatsapp.rate_limit import Decision
+
+    with session_factory() as session:
+        customer = CustomerService(session).identify("+923001234567")
+        conversations = ConversationService(session)
+        escalated = conversations.get_or_open(customer.id)
+        conversations.add_message(escalated.id, "user", "Pending human request")
+        conversations.escalate(escalated.id, "human review")
+        session.commit()
+        customer_id = customer.id
+        escalated_id = escalated.id
+
+    with session_factory() as session:
+        initial_escalation = session.get(Conversation, escalated_id)
+        original_status = initial_escalation.status
+        original_history = [
+            (message.role, message.content)
+            for message in session.scalars(
+                select(Message)
+                .where(Message.conversation_id == escalated_id)
+                .order_by(Message.id)
+            )
+        ]
+
+    graph_inputs = []
+    graph_conversation_ids = []
+    assistant_reply = "I can check Notebook A4 for you."
+
+    class FakeGraph:
+        def invoke(self, state, config):
+            human_inputs = [
+                message.content
+                for message in state["messages"]
+                if isinstance(message, HumanMessage)
+            ]
+            graph_inputs.extend(human_inputs)
+            graph_conversation_ids.append(state["conversation_id"])
+            return {
+                "messages": [
+                    *state["messages"],
+                    AIMessage(content=assistant_reply),
+                ]
+            }
+
+    monkeypatch.setattr(
+        chat_service,
+        "build_sales_graph",
+        lambda *_args, **_kwargs: FakeGraph(),
+    )
+
+    class AllowLimiter:
+        @staticmethod
+        def check(_key):
+            return Decision.ALLOW
+
+    class FakeWhatsAppClient:
+        def __init__(self):
+            self.sent = []
+
+        async def send_text(self, _phone, body):
+            self.sent.append(body)
+            return True
+
+    monkeypatch.setattr(webhook, "get_rate_limiter", lambda: AllowLimiter())
+    client = FakeWhatsAppClient()
+    message = IncomingMessage(
+        message_id="wamid.NEW_QUESTION_TEST",
+        phone="+923001234567",
+        text="New question: Do you have Notebook A4?",
+    )
+
+    await webhook.process_message(message, session_factory, None, settings, client)
+
+    assert graph_inputs == ["Do you have Notebook A4?"]
+    assert graph_conversation_ids[0] != escalated_id
+    assert client.sent == [assistant_reply]
+
+    with session_factory() as session:
+        original = session.get(Conversation, escalated_id)
+        assert original.status == original_status == "escalated"
+        assert [
+            (item.role, item.content)
+            for item in session.scalars(
+                select(Message)
+                .where(Message.conversation_id == escalated_id)
+                .order_by(Message.id)
+            )
+        ] == original_history
+
+        new_conversation = session.get(Conversation, graph_conversation_ids[0])
+        assert new_conversation.customer_id == customer_id
+        assert new_conversation.status == "open"
+        assert [
+            (item.role, item.content)
+            for item in session.scalars(
+                select(Message)
+                .where(Message.conversation_id == graph_conversation_ids[0])
+                .order_by(Message.id)
+            )
+        ] == [
+            ("user", "Do you have Notebook A4?"),
+            ("assistant", assistant_reply),
+        ]
+        assert HANDOFF_REPLY not in [
+            item.content
+            for item in session.scalars(
+                select(Message).where(Message.conversation_id == escalated_id)
+            )
+        ]
+
+
+@pytest.mark.anyio
+async def test_unprefixed_webhook_message_on_escalation_uses_handoff(
+    session_factory, settings, monkeypatch
+):
+    from sqlalchemy import select
+
+    from app.database.models import Conversation, Message
+    from app.services import chat_service
+    from app.services.chat_service import HANDOFF_REPLY
+    from app.services.conversation_service import ConversationService
+    from app.services.customer_service import CustomerService
+    from app.whatsapp.rate_limit import Decision
+
+    phone = "+923001234567"
+    with session_factory() as session:
+        customer = CustomerService(session).identify(phone)
+        conversations = ConversationService(session)
+        conversation = conversations.get_or_open(customer.id)
+        conversations.add_message(conversation.id, "user", "Pending human request")
+        conversations.escalate(conversation.id, "human review")
+        session.commit()
+        escalated_id = conversation.id
+
+    graph_calls = []
+
+    def unexpected_graph(*_args, **_kwargs):
+        graph_calls.append(True)
+        raise AssertionError("unprefixed escalated messages must not invoke the graph")
+
+    monkeypatch.setattr(chat_service, "build_sales_graph", unexpected_graph)
+
+    class AllowLimiter:
+        @staticmethod
+        def check(_key):
+            return Decision.ALLOW
+
+    class FakeWhatsAppClient:
+        def __init__(self):
+            self.sent = []
+
+        async def send_text(self, _phone, body):
+            self.sent.append(body)
+            return True
+
+    monkeypatch.setattr(webhook, "get_rate_limiter", lambda: AllowLimiter())
+    client = FakeWhatsAppClient()
+    message = IncomingMessage(
+        message_id="wamid.UNPREFIXED_ESCALATED_TEST",
+        phone=phone,
+        text="Can someone help me?",
+    )
+
+    await webhook.process_message(message, session_factory, None, settings, client)
+
+    assert client.sent == [HANDOFF_REPLY]
+    assert graph_calls == []
+    with session_factory() as session:
+        conversation = session.get(Conversation, escalated_id)
+        assert conversation.status == "escalated"
+        assert [
+            item.content
+            for item in session.scalars(
+                select(Message).where(Message.conversation_id == escalated_id)
+            )
+        ][-1] == HANDOFF_REPLY
+
+
+@pytest.mark.anyio
+async def test_duplicate_rate_limited_event_sends_only_one_notification(
+    session_factory, settings, monkeypatch
+):
+    from app.whatsapp.rate_limit import Decision, RATE_LIMIT_REPLY
+
+    class NotifyLimiter:
+        def __init__(self):
+            self.checks = 0
+
+        def check(self, _key):
+            self.checks += 1
+            return Decision.NOTIFY
+
+    class FakeWhatsAppClient:
+        def __init__(self):
+            self.sent = []
+
+        async def send_text(self, _phone, body):
+            self.sent.append(body)
+            return True
+
+    limiter = NotifyLimiter()
+    client = FakeWhatsAppClient()
+    monkeypatch.setattr(webhook, "get_rate_limiter", lambda: limiter)
+    message = IncomingMessage(
+        message_id="wamid.RATE_LIMIT_DUPLICATE_TEST",
+        phone="923001234567",
+        text="Rate-limited unique event",
+    )
+
+    await webhook.process_message(message, session_factory, None, settings, client)
+    await webhook.process_message(message, session_factory, None, settings, client)
+
+    assert client.sent == [RATE_LIMIT_REPLY]
+    assert limiter.checks == 1
+
+
+@pytest.mark.anyio
+async def test_first_rate_limited_event_sends_notification_without_chat(
+    session_factory, settings, monkeypatch
+):
+    from app.whatsapp.rate_limit import Decision, RATE_LIMIT_REPLY
+
+    class NotifyLimiter:
+        @staticmethod
+        def check(_key):
+            return Decision.NOTIFY
+
+    class FakeWhatsAppClient:
+        def __init__(self):
+            self.sent = []
+
+        async def send_text(self, _phone, body):
+            self.sent.append(body)
+            return True
+
+    def unexpected_chat(*_args, **_kwargs):
+        raise AssertionError("rate-limited event must not invoke ChatService")
+
+    monkeypatch.setattr(webhook, "get_rate_limiter", lambda: NotifyLimiter())
+    monkeypatch.setattr(webhook, "_handle_claimed_sync", unexpected_chat)
+    client = FakeWhatsAppClient()
+    message = IncomingMessage(
+        message_id="wamid.RATE_LIMIT_UNIQUE_TEST",
+        phone="923001234567",
+        text="Rate-limited unique event",
+    )
+
+    await webhook.process_message(message, session_factory, None, settings, client)
+
+    assert client.sent == [RATE_LIMIT_REPLY]
+
+
+@pytest.mark.anyio
 async def test_process_message_sends_fallback_on_failure(monkeypatch):
     """Processing failure should send the fallback reply."""
 
@@ -325,6 +651,8 @@ async def test_process_message_sends_fallback_on_failure(monkeypatch):
     )
 
     async def fake_run_in_threadpool(func, *args, **kwargs):
+        if func is webhook._claim_event_sync:
+            return True
         raise RuntimeError("Simulated processing failure")
 
     monkeypatch.setattr(

@@ -17,12 +17,27 @@ class ConversationService:
         self.repo = ConversationRepository(session)
 
     def get_or_open(self, customer_id: int) -> Conversation:
+        self.repo.lock_customer(customer_id)
         conversation = self.repo.get_latest_active(customer_id)
         if conversation is None:
-            conversation = self.repo.add(customer_id)
-            logger.info(
-                "conversation opened conversation_id=%s customer_id=%s", conversation.id, customer_id
-            )
+            conversation = self._add_open(customer_id)
+        return conversation
+
+    def get_or_open_ai_conversation(self, customer_id: int) -> Conversation:
+        """Select or create an open AI conversation under a customer-row lock."""
+        self.repo.lock_customer(customer_id)
+        conversation = self.repo.get_latest_open(customer_id)
+        if conversation is None:
+            conversation = self._add_open(customer_id)
+        return conversation
+
+    def _add_open(self, customer_id: int) -> Conversation:
+        conversation = self.repo.add(customer_id)
+        logger.info(
+            "conversation opened conversation_id=%s customer_id=%s",
+            conversation.id,
+            customer_id,
+        )
         return conversation
 
     def history(self, conversation_id: int, limit: int) -> list[tuple[str, str]]:

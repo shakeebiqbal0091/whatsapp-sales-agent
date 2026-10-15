@@ -1,8 +1,12 @@
+import json
+from unittest.mock import Mock, patch
+
 from langchain_core.messages import AIMessage, HumanMessage, ToolMessage
 from sqlalchemy import select
 
 from app.database.models import Conversation, Customer, Lead
 from app.graph.sales_graph import MAX_GRAPH_STEPS, build_sales_graph
+from app.tools.product_tools import build_product_tools
 from tests.conftest import ScriptedLLM, tool_call
 
 
@@ -13,7 +17,14 @@ def _run(llm, session, text="hi"):
     conversation = Conversation(customer_id=customer.id)
     session.add(conversation)
     session.flush()
-    graph = build_sales_graph(llm, session, customer.id, conversation.id, "USD")
+    graph = build_sales_graph(
+        llm,
+        session,
+        customer.id,
+        conversation.id,
+        "USD",
+        use_inventory_api=False,
+    )
     state = {"messages": [HumanMessage(content=text)], "customer_id": customer.id,
              "phone_number": customer.phone, "conversation_id": conversation.id}
     return graph.invoke(state, config={"recursion_limit": MAX_GRAPH_STEPS}), customer, conversation
@@ -44,6 +55,54 @@ def test_unknown_product_tool_result_is_empty(session):
     result, _, _ = _run(llm, session)
     tool_msg = next(m for m in result["messages"] if isinstance(m, ToolMessage))
     assert '"count": 0' in tool_msg.content
+
+
+def test_inventory_name_search_then_id_lookup_keeps_zero_stock_product(session):
+    product = {
+        "id": "inv-notebook-a4",
+        "name": "Notebook A4",
+        "price": 4.99,
+        "quantity": 0,
+    }
+    inventory_client = Mock()
+    inventory_client.list_products.return_value = [product]
+    inventory_client.get_product.return_value = product
+    llm = ScriptedLLM([
+        tool_call("search_products", {"query": "Notebook A4"}, "search"),
+        tool_call("get_product", {"product_id": product["id"]}, "details"),
+        AIMessage(content="Notebook A4 exists, but is currently out of stock."),
+    ])
+    tools = build_product_tools(session, "USD", inventory_client)
+
+    with patch("app.graph.sales_graph.build_tools", return_value=tools):
+        result, _, _ = _run(llm, session, "Do you have Notebook A4?")
+
+    tool_messages = [
+        message for message in result["messages"] if isinstance(message, ToolMessage)
+    ]
+    search_result = json.loads(tool_messages[0].content)
+    detail_result = json.loads(tool_messages[1].content)
+    tool_call_names = []
+    for messages in llm.calls:
+        assistant_tool_calls = [
+            message.tool_calls
+            for message in messages
+            if isinstance(message, AIMessage) and message.tool_calls
+        ]
+        if assistant_tool_calls:
+            tool_call_names.append(assistant_tool_calls[-1][0]["name"])
+
+    assert search_result == {"count": 1, "products": [product]}
+    assert search_result["products"][0]["quantity"] == 0
+    assert detail_result == {"found": True, "product": product}
+    inventory_client.get_product.assert_called_once_with("inv-notebook-a4")
+    assert tool_call_names == [
+        "search_products",
+        "get_product",
+    ]
+    assert result["messages"][-1].content == (
+        "Notebook A4 exists, but is currently out of stock."
+    )
 
 
 def test_create_lead_and_escalate_write_to_db(session):
