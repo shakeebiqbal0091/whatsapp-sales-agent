@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.database.models import Conversation, Message
+from app.database.models import Conversation, Customer, Message
 
 
 class ConversationRepository:
@@ -15,6 +15,27 @@ class ConversationRepository:
         return self.session.scalar(
             select(Conversation)
             .where(Conversation.customer_id == customer_id, Conversation.status != "closed")
+            .order_by(Conversation.id.desc())
+            .limit(1)
+        )
+
+    def lock_customer(self, customer_id: int) -> None:
+        """Serialize conversation selection and creation for this customer."""
+        locked_id = self.session.scalar(
+            select(Customer.id)
+            .where(Customer.id == customer_id)
+            .with_for_update()
+        )
+        if locked_id is None:
+            raise LookupError("Customer does not exist.")
+
+    def get_latest_open(self, customer_id: int) -> Conversation | None:
+        return self.session.scalar(
+            select(Conversation)
+            .where(
+                Conversation.customer_id == customer_id,
+                Conversation.status == "open",
+            )
             .order_by(Conversation.id.desc())
             .limit(1)
         )

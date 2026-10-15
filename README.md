@@ -48,9 +48,12 @@ CLAUDE.md section 33 against a real Groq key before connecting WhatsApp.
 
 ## Behaviour notes
 
-- Customer = WhatsApp phone number, normalised to `+<digits>`; one active conversation per customer.
+- Customer = WhatsApp phone number, normalised to `+<digits>`. An escalated conversation may remain
+  open while a separate AI conversation handles a nonempty `New question:` request.
 - `customer_id` / `conversation_id` are bound server-side into tools; the LLM cannot pass them.
 - Order intent: `create_lead` then `escalate_to_human` (no order tool until v0.4).
-- Once escalated, the bot sends a fixed handoff reply and stops calling the LLM. Nothing resets
-  this status yet; a human-reply/close mechanism is needed (see Next).
+- In an escalated conversation, ordinary messages receive a fixed handoff reply. A nonempty
+  `New question:` prefix starts or uses a separate AI conversation; the original escalation
+  remains open (escalated). Nothing resolves it automatically; a human-reply/close mechanism
+  is needed (see Next).
 - Agent/LLM failure: customer gets a generic fallback; the real error is logged; the user message is still saved.

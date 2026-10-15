@@ -96,11 +96,32 @@ def _handle_sync(
     message: IncomingMessage, session_factory: sessionmaker[Session], llm: BaseChatModel, settings: Settings
 ) -> str | None:
     """Blocking part: dedupe + agent turn. Returns the reply, or None if this is a duplicate."""
+    if not _claim_event_sync(message.message_id, session_factory):
+        logger.info("duplicate webhook event ignored id=%s", message.message_id)
+        return None
+    return _handle_claimed_sync(message, session_factory, llm, settings)
+
+
+def _claim_event_sync(
+    message_id: str,
+    session_factory: sessionmaker[Session],
+) -> bool:
+    """Persist the event claim before rate limiting or processing can send a reply."""
     with session_factory() as session:
-        if not EventRepository(session).claim(message.message_id):
-            logger.info("duplicate webhook event ignored id=%s", message.message_id)
-            return None
-        return ChatService(session, llm, settings).handle_message(message.phone, message.text)
+        return EventRepository(session).claim(message_id)
+
+
+def _handle_claimed_sync(
+    message: IncomingMessage,
+    session_factory: sessionmaker[Session],
+    llm: BaseChatModel,
+    settings: Settings,
+) -> str:
+    """Run the chat turn after the event has already been claimed."""
+    with session_factory() as session:
+        return ChatService(session, llm, settings).handle_message(
+            message.phone, message.text
+        )
 
 
 async def process_message(
@@ -110,16 +131,36 @@ async def process_message(
     settings: Settings,
     client: WhatsAppClient,
 ) -> None:
+    try:
+        claimed = await run_in_threadpool(
+            _claim_event_sync, message.message_id, session_factory
+        )
+    except Exception:
+        logger.exception("webhook event claim failed id=%s", message.message_id)
+        return
+    if not claimed:
+        logger.info("duplicate webhook event ignored id=%s", message.message_id)
+        return
+
     decision = get_rate_limiter().check(message.phone)  # event-loop thread: no locking needed
     if decision is not Decision.ALLOW:
         logger.warning("rate limited decision=%s", decision.value)
         if decision is Decision.NOTIFY:
-            await client.send_text(message.phone, RATE_LIMIT_REPLY)
+            sent = await client.send_text(message.phone, RATE_LIMIT_REPLY)
+            if not sent:
+                logger.error(
+                    "rate limit reply delivery failed event_id=%s",
+                    message.message_id,
+                )
         return
     try:
-        reply = await run_in_threadpool(_handle_sync, message, session_factory, llm, settings)
+        reply = await run_in_threadpool(
+            _handle_claimed_sync, message, session_factory, llm, settings
+        )
     except Exception:
         logger.exception("webhook processing failure id=%s", message.message_id)
         reply = FALLBACK_REPLY
     if reply is not None:
-        await client.send_text(message.phone, reply)
+        sent = await client.send_text(message.phone, reply)
+        if not sent:
+            logger.error("webhook reply delivery failed event_id=%s", message.message_id)

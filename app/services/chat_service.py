@@ -1,5 +1,6 @@
 """One customer turn end-to-end. Reused by /chat now and the WhatsApp webhook in Phase 9."""
 import logging
+import re
 
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
@@ -14,6 +15,8 @@ from app.services.customer_service import CustomerService
 logger = logging.getLogger(__name__)
 
 HANDOFF_REPLY = "Our team has your request and will get back to you here shortly."
+NEW_QUESTION_CLARIFICATION = "Please add the question you'd like me to help with."
+_NEW_QUESTION = re.compile(r"^\s*New question:(.*)$", re.IGNORECASE | re.DOTALL)
 
 
 def _text(content: str | list) -> str:
@@ -32,6 +35,13 @@ class ChatService:
         self.conversations = ConversationService(session)
 
     def handle_message(self, phone: str, text: str) -> str:
+        match = _NEW_QUESTION.match(text)
+        new_question = match.group(1).strip() if match else None
+        if new_question == "":
+            return NEW_QUESTION_CLARIFICATION
+        if new_question is not None:
+            text = new_question
+
         customer = self.customers.identify(phone)
         conversation = self.conversations.get_or_open(customer.id)
         logger.info(
@@ -39,15 +49,26 @@ class ChatService:
             customer.id, conversation.id, len(text),
         )
 
-        history = self.conversations.history(conversation.id, self.settings.history_message_limit)
-        self.conversations.add_message(conversation.id, "user", text)
-        self.session.commit()  # the customer's message is never lost, even if the agent fails
-
         # Already handed to a human: don't let the bot talk over the team.
         if conversation.status == ESCALATED:
-            self.conversations.add_message(conversation.id, "assistant", HANDOFF_REPLY)
-            self.session.commit()
-            return HANDOFF_REPLY
+            if new_question is None:
+                history = self.conversations.history(
+                    conversation.id, self.settings.history_message_limit
+                )
+                self.conversations.add_message(conversation.id, "user", text)
+                self.session.commit()
+                self.conversations.add_message(
+                    conversation.id, "assistant", HANDOFF_REPLY
+                )
+                self.session.commit()
+                return HANDOFF_REPLY
+            conversation = self.conversations.get_or_open_ai_conversation(customer.id)
+
+        history = self.conversations.history(
+            conversation.id, self.settings.history_message_limit
+        )
+        self.conversations.add_message(conversation.id, "user", text)
+        self.session.commit()  # persist before invoking the agent
 
         prior: list[BaseMessage] = [
             HumanMessage(content=c) if role == "user" else AIMessage(content=c) for role, c in history
